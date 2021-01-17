@@ -2,6 +2,7 @@ module.exports = {
   "title": "知识库",
   "description": "记录学习，工作，生活中的知识",
   "dest": "public",
+  "base":"/docs/",
   "head": [
     [
       "link",
