@@ -36,10 +36,6 @@ module.exports = {
         "icon": "reco-message",
         "items": [
           {
-            "text": "vuepress-reco",
-            "link": "/docs/theme-reco/"
-          },
-          {
             "text": "java8",
             "link": "/docs/Java8/"
           }
@@ -58,12 +54,6 @@ module.exports = {
       }
     ],
     "sidebar": {
-      "/docs/theme-reco/": [
-        "",
-        "theme",
-        "plugin",
-        "api"
-      ],
       "/docs/java8/": [
         "",
         "行为参数化",
