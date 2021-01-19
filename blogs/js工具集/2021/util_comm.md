@@ -6,15 +6,31 @@ tags:
 categories: 
  - js
 ---
-
-## 78.金钱格式化，三位加逗号
+## 判断是否为空
+```js
+/**
+  * @description 判断是否为空
+    * @param str
+    * @returns {boolean}
+      */
+      export function isBlank(str) {
+        return (
+    str == null ||
+  false ||
+   str === "" ||
+   str.trim() === "" ||
+   str.toLocaleLowerCase().trim() === "null"
+     );
+   }
+```
+## 金钱格式化，三位加逗号
 ```js
 /**
  *  @param { number } num
     */
     export const formatMoney = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 ```
-## 79.截取字符串并加身略号
+## 截取字符串并加身略号
 ```js
 export function subText(str, length) {
     if (str.length === 0) {
@@ -27,7 +43,7 @@ export function subText(str, length) {
     }
 }
 ```
-## 80.获取文件base64编码
+## 获取文件base64编码
 ```js
  /**
      * @param file
@@ -66,7 +82,7 @@ export function subText(str, length) {
     })
     }
  ```   
-## 81.B转换到KB,MB,GB并保留两位小数
+## B转换到KB,MB,GB并保留两位小数
 ```js
  /**
      * @param { number } fileSize
@@ -90,7 +106,7 @@ export function subText(str, length) {
     }
     }
 ```
-## 82.base64转file
+## base64转file
 ```js
  /**
      *  @param { base64 } base64
@@ -109,7 +125,7 @@ export function subText(str, length) {
      return new File([u8arr], `${filename}.${suffix}`, { type: mime })
      };
 ```
-## 83.base64转blob
+## base64转blob
 ```js
 /**
     *  @param { base64 } base64
@@ -126,7 +142,7 @@ export function subText(str, length) {
     return new Blob([u8arr], { type: mime });
     };
 ```
-## 84.blob转file
+## blob转file
 ```js
 /**
     *  @param { blob } blob
@@ -138,7 +154,7 @@ export function subText(str, length) {
     return blob;
     };
 ```
-## 85.file转base64
+## file转base64
 ```js
  /**
      * @param { * } file 图片文件
@@ -151,7 +167,7 @@ export function subText(str, length) {
     };
     };
 ```
-## 86.递归生成树形结构
+## 递归生成树形结构
 ```js
 export function getTreeData(data, pid, pidName = 'parentId', idName = 'id', childrenName = 'children', key) {
     let arr = [];
@@ -168,7 +184,7 @@ export function getTreeData(data, pid, pidName = 'parentId', idName = 'id', chil
 
 }
 ```
-## 87.遍历树节点
+## 遍历树节点
 ```js
 export function foreachTree(data, childrenName = 'children', callback) {
     for (let i = 0; i < data.length; i++) {
@@ -179,7 +195,7 @@ export function foreachTree(data, childrenName = 'children', callback) {
     }
 }
 ```
-## 88.追溯父节点
+## 追溯父节点
 ```js
 export function traceParentNode(pid, data, rootPid, pidName = 'parentId', idName = 'id', childrenName = 'children') {
     let arr = [];
@@ -194,7 +210,7 @@ export function traceParentNode(pid, data, rootPid, pidName = 'parentId', idName
     return arr; 
 }
 ```
-## 89.寻找所有子节点
+## 寻找所有子节点
 ```js
 export function traceChildNode(id, data, pidName = 'parentId', idName = 'id', childrenName = 'children') {
     let arr = [];
@@ -207,7 +223,7 @@ export function traceChildNode(id, data, pidName = 'parentId', idName = 'id', ch
     return arr;
 }
 ```
-## 90.根据pid生成树形结构
+## 根据pid生成树形结构
 ```js
 /**
     *  @param { object } items 后台获取的数据
@@ -218,7 +234,7 @@ export function traceChildNode(id, data, pidName = 'parentId', idName = 'id', ch
     items.filter(item => item[link] === id).map(item => ({ ...item, children: createTree(items, item.id) }));
     };
 ```
-## 91.查询数组中是否存在某个元素并返回元素第一次出现的下标
+## 查询数组中是否存在某个元素并返回元素第一次出现的下标
 ```js
  /** 
      * @param {*} item 
@@ -231,57 +247,6 @@ export function traceChildNode(id, data, pidName = 'parentId', idName = 'id', ch
         }
     }
     return -1;
-    }
-```
-## 92.Windows根据详细版本号判断当前系统名称
-```js
- /**
-     * @param { string } osVersion 
-       */
-       export function OutOsName(osVersion) {
-       if(!osVersion){
-           return
-       }
-       let str = osVersion.substr(0, 3);
-       if (str === "5.0") {
-           return "Win 2000"
-       } else if (str === "5.1") {
-           return "Win XP"
-       } else if (str === "5.2") {
-           return "Win XP64"
-       } else if (str === "6.0") {
-           return "Win Vista"
-       } else if (str === "6.1") {
-           return "Win 7"
-       } else if (str === "6.2") {
-           return "Win 8"
-       } else if (str === "6.3") {
-           return "Win 8.1"
-       } else if (str === "10.") {
-           return "Win 10"
-   } else {
-        return "Win"
-    }
-    }
-```
-## 93.判断手机是Andoird还是IOS
-```js
-/**
-    *  0: ios
-    *  1: android
-    *  2: 其它
-       */
-       export function getOSType() {
-       let u = navigator.userAgent, app = navigator.appVersion;
-       let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
-       let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-       if (isIOS) {
-           return 0;
-   }
-    if (isAndroid) {
-        return 1;
-    }
-    return 2;
     }
 ```
 ## 94.函数防抖
@@ -422,71 +387,6 @@ export function traceChildNode(id, data, pidName = 'parentId', idName = 'id', ch
     */
     export function countOccurrences(arr, value) {
     return arr.reduce((a, v) => v === value ? a + 1 : a + 0, 0);
-    }
-```
-## 101.加法函数（精度丢失问题）
-```js
- /**
-     * @param { number } arg1
-     * @param { number } arg2
-       */
-       export function add(arg1, arg2) {
-       let r1, r2, m;
-   try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
-    try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
-    m = Math.pow(10, Math.max(r1, r2));
-    return (arg1 * m + arg2 * m) / m
-    }
-```
-## 102.减法函数（精度丢失问题）
-```js
- /**
-     * @param { number } arg1
-     * @param { number } arg2
-       */
-       export function sub(arg1, arg2) {
-       let r1, r2, m, n;
-       try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
-   try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
-    m = Math.pow(10, Math.max(r1, r2));
-    n = (r1 >= r2) ? r1 : r2;
-    return Number(((arg1 * m - arg2 * m) / m).toFixed(n));
-    }
-```
-## 103.除法函数（精度丢失问题）
-```js
- /**
-     * @param { number } num1
-     * @param { number } num2
-       */
-       export function division(num1,num2){
-       let t1,t2,r1,r2;
-       try{
-           t1 = num1.toString().split('.')[1].length;
-       }catch(e){
-           t1 = 0;
-       }
-       try{
-           t2=num2.toString().split(".")[1].length;
-       }catch(e){
-           t2=0;
-   }
-    r1=Number(num1.toString().replace(".",""));
-    r2=Number(num2.toString().replace(".",""));
-    return (r1/r2)*Math.pow(10,t2-t1);
-    }
- ```
-## 104.乘法函数（精度丢失问题）
-```js
- /**
-     * @param { number } num1
-     * @param { number } num2
-       */
-       export function mcl(num1,num2){
-   let m=0,s1=num1.toString(),s2=num2.toString();
-    try{m+=s1.split(".")[1].length}catch(e){}
-    try{m+=s2.split(".")[1].length}catch(e){}
-    return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m);
     }
 ```
 ## 105.递归优化（尾递归）
@@ -659,11 +559,7 @@ export const detectDeviceType = () => { return /Android|webOS|iPhone|iPad|iPod|B
  // 事例:隐藏页面上所有`<img>`元素?
  hide(document.querySelectorAll('img'))
  ```
-## 118.如何检查元素是否具有指定的类？
-```js
-页面DOM里的每个节点上都有一个classList对象，程序员可以使用里面的方法新增、删除、修改节点上的CSS类。使用classList，程序员还可以用它来判断某个节点是否被赋予了某个CSS类。
 
- const hasClass = (el, className) => el.classList.contains(className)
 
  // 事例
  hasClass(document.querySelector('p.special'), 'special') // true
@@ -747,11 +643,7 @@ window.requestAnimationFrame() 告诉浏览器——你希望执行一个动画�
 
  // 事例
  detectDeviceType(); // "Mobile" or "Desktop"
-## 126.How to get the current URL?
- const currentURL = () => window.location.href
 
- // 事例
- currentURL() // 'https://google.com'
  ```
 ## 127.如何创建一个包含当前URL参数的对象？
 ```js
@@ -1665,31 +1557,6 @@ $(*function* () {
   *//将最大高度赋值给所有元素，*
 })
 ```
-## 155.js定时清除缓存，存储缓存，获取缓存
-```js
-// 封装本地存储的方法
-export const storage = {
-  set: function(variable, value, ttl_ms) {
-    var data = { value: value, expires_at: new Date(ttl_ms).getTime() };
-    localStorage.setItem(variable.toString(), JSON.stringify(data));
-  },
-  get: function(variable) {
-    var data = JSON.parse(localStorage.getItem(variable.toString()));
-    if (data !== null) {
-      debugger
-      if (data.expires_at !== null && data.expires_at < new Date().getTime()) {
-        localStorage.removeItem(variable.toString());
-      } else {
-        return data.value;
-      }
-    }
-    return null;
-  },
-  remove(key) {
-    localStorage.removeItem(key);
-  }
-}
-```
 ## 156.数组降维
 ```js
 //数组降维
@@ -1701,65 +1568,29 @@ reduceDimension(arr) {
       return reduced;
 }
 ```
-## 157.设置cookie,获取cookie,删除cookie
-```js
- var cookieUtil = {
-  getCookie: function (name) {
-    var arrCookie = document.cookie.split("; ");
-    for (var i = 0; i < arrCookie.length; i++) {
-      var cookieItem = arrCookie[i].split('=');
-      if (cookieItem[0] == name) {
-        return cookieItem[1];
-      }
-    }
-    return undefined;
-  },
-  setCookie: function (name, value, expires, path, domain, secure) {
-    var cookieText = encodeURIComponent(name) + "=" +
-      encodeURIComponent(value);
-    if (expires instanceof Date) {
-      cookieText += "; expires=" + expires.toGMTString();
-    }
-    if (path) {
-      cookieText += "; path=" + path;
-    }
-    if (domain) {
-      cookieText += "; domain=" + domain;
-    }
-    if (secure) {
-      cookieText += "; secure";
-    }
-    document.cookie = cookieText;
-  },
-  removeCookie: function (name, path, domain, secure) {
-    this.set(name, "", new Date(0), path, domain, secure);
-  }
-} 
-```
 ## 181.数组去重
-### 方案一：Set + ...
 ```js
+// 方案一：Set + ...
 function noRepeat(arr) {
   return [...new Set(arr)];
 }
 noRepeat([1,2,3,1,2,3])
-```
-### 方案二：Set + Array.from
-```js
+
+//方案二：Set + Array.from
 function noRepeat(arr) {
   return Array.from(new Set(arr));
 }
 noRepeat([1,2,3,1,2,3])
-```
-### 方案三：双重遍历比对下标
-```js
+
+
+//方案三：双重遍历比对下标
+
 function noRepeat(arr) {
   return arr.filter((v, idx)=>idx == arr.lastIndexOf(v))
 }
 noRepeat([1,2,3,1,2,3])
-```
-### 方案四：单遍历 + Object 特性
-```js
+
+//方案四：单遍历 + Object 特性
 Object 的特性是 Key 不会重复。 这里使用 values 是因为可以保留类型，keys 会变成字符串。
 
 function noRepeat(arr) {
@@ -1770,8 +1601,6 @@ function noRepeat(arr) {
 }
 noRepeat([1,2,3,1,2,3])
 ```
-### 后记
-针对于上述的方案，还有其他变种实现。
 
 ## 182.查找数组最大
 ### 方案一：Math.max + ...
@@ -1895,116 +1724,47 @@ diffrence([1,2,3], [3,4,5,2])
 ```
 ## 186.返回两个数组中相同的元素
 ```js
-#方案一：filter + includes
+//方案一：filter + includes
 function intersection(arr1, arr2) {
   return arr2.filter((v) => arr1.includes(v));
 }
 intersection([1,2,3], [3,4,5,2])
-#方案二：同理变种用 hash
+//方案二：同理变种用 hash
 function intersection(arr1, arr2) {
     var set = new Set(arr2)
   return arr1.filter((v) => set.has(v));
 }
 intersection([1,2,3], [3,4,5,2])
 ```
-## 187.从右删除 n 个元素
+
+## 返回数组头元素
 ```js
-#方案一：slice
-function dropRight(arr, n = 0) {
-  return n < arr.length ? arr.slice(0, arr.length - n) : [];
-}
-dropRight([1,2,3,4,5], 2)
-#方案二: splice
-function dropRight(arr, n = 0) {
-  return arr.splice(0, arr.length - n)
-}
-dropRight([1,2,3,4,5], 2)
-#方案三: slice 另一种
-function dropRight(arr, n = 0) {
-  return arr.slice(0, -n)
-}
-dropRight([1,2,3,4,5], 2)
-#方案四: 修改 length
-function dropRight(arr, n = 0) {
-    arr.length = Math.max(arr.length - n, 0)
-    return arr
-}
-dropRight([1,2,3,4,5], 2)
-```
-## 188.截取第一个符合条件的元素及其以后的元素
-```js
-#方案一：slice + 循环
-function dropElements(arr, fn) {
-  while (arr.length && !fn(arr[0])) arr = arr.slice(1);
-  return arr;
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v == 2)
-#方案二：findIndex + slice
-function dropElements(arr, fn) {
-  return arr.slice(Math.max(arr.findIndex(fn), 0));
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v === 3)
-#方案三：splice + 循环
-function dropElements(arr, fn) {
-  while (arr.length && !fn(arr[0])) arr.splice(0,1);
-  return arr;
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v == 2)
-```
-## 189.返回数组中下标间隔 nth 的元素
-```js
-#方案一：filter
-function everyNth(arr, nth) {
-  return arr.filter((v, i) => i % nth === nth - 1);
-}
-everyNth([1,2,3,4,5,6,7,8], 2)
-#方案二：方案一修改判断条件
-function everyNth(arr, nth) {
-  return arr.filter((v, i) => (i+1) % nth === 0);
-}
-everyNth([1,2,3,4,5,6,7,8], 2)
-## 190.返回数组中第 n 个元素（支持负数）
-#方案一：slice
-function nthElement(arr, n = 0) {
-  return (n >= 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
-}
-nthElement([1,2,3,4,5], 0)
-nthElement([1,2,3,4,5], -1)
-#方案二：三目运算符
-function nthElement(arr, n = 0) {
-  return (n >= 0 ? arr[0] : arr[arr.length + n])
-}
-nthElement([1,2,3,4,5], 0)
-nthElement([1,2,3,4,5], -1)
-```
-## 191.返回数组头元素
-```js
-#方案一：
+//方案一：
 function head(arr) {
   return arr[0];
 }
 head([1,2,3,4])
-#方案二：
+//方案二：
 function head(arr) {
   return arr.slice(0,1)[0];
 }
 head([1,2,3,4])
 ```
-## 192.返回数组末尾元素
+## 返回数组末尾元素
 ```js
-#方案一：
+//方案一：
 function last(arr) {
   return arr[arr.length - 1];
 }
-#方案二：
+//方案二：
 function last(arr) {
   return arr.slice(-1)[0];
 }
 last([1,2,3,4,5])
 ```
-## 193.数组乱排
+## 数组乱排
 ```js
-#方案一：洗牌算法
+//方案一：洗牌算法
 function shuffle(arr) {
   let array = arr;
   let index = array.length;
@@ -2020,204 +1780,22 @@ function shuffle(arr) {
   return array;
 }
 shuffle([1,2,3,4,5])
-#方案二：sort + random
+//方案二：sort + random
 function shuffle(arr) {
   return arr.sort((n,m)=>Math.random() - .5)
 }
 shuffle([1,2,3,4,5])
 ```
-## 194.伪数组转换为数组
+## 伪数组转换为数组
 ```js
-#方案一：Array.from
+//方案一：Array.from
 Array.from({length: 2})
-#方案二：prototype.slice
+//方案二：prototype.slice
 Array.prototype.slice.call({length: 2,1:1})
-#方案三：prototype.splice
+//方案三：prototype.splice
 Array.prototype.splice.call({length: 2,1:1},0)
 ```
-# 浏览器对象 BOM
-## 195.判读浏览器是否支持 CSS 属性
-```js
-/**
- * 告知浏览器支持的指定css属性情况
- * @param {String} key - css属性，是属性的名字，不需要加前缀
- * @returns {String} - 支持的属性情况
- */
-function validateCssKey(key) {
-  const jsKey = toCamelCase(key); // 有些css属性是连字符号形成
-  if (jsKey in document.documentElement.style) {
-    return key;
-  }
-  let validKey = "";
-  // 属性名为前缀在js中的形式，属性值是前缀在css中的形式
-  // 经尝试，Webkit 也可是首字母小写 webkit
-  const prefixMap = {
-    Webkit: "-webkit-",
-    Moz: "-moz-",
-    ms: "-ms-",
-    O: "-o-",
-  };
-  for (const jsPrefix in prefixMap) {
-    const styleKey = toCamelCase(`${jsPrefix}-${jsKey}`);
-    if (styleKey in document.documentElement.style) {
-      validKey = prefixMap[jsPrefix] + key;
-      break;
-    }
-  }
-  return validKey;
-}
-
-/**
- * 把有连字符号的字符串转化为驼峰命名法的字符串
- */
-function toCamelCase(value) {
-  return value.replace(/-(\w)/g, (matched, letter) => {
-    return letter.toUpperCase();
-  });
-}
-
-/**
- * 检查浏览器是否支持某个css属性值（es6版）
- * @param {String} key - 检查的属性值所属的css属性名
- * @param {String} value - 要检查的css属性值（不要带前缀）
- * @returns {String} - 返回浏览器支持的属性值
- */
-function valiateCssValue(key, value) {
-  const prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
-  const prefixValue = prefix.map((item) => {
-    return item + value;
-  });
-  const element = document.createElement("div");
-  const eleStyle = element.style;
-  // 应用每个前缀的情况，且最后也要应用上没有前缀的情况，看最后浏览器起效的何种情况
-  // 这就是最好在prefix里的最后一个元素是''
-  prefixValue.forEach((item) => {
-    eleStyle[key] = item;
-  });
-  return eleStyle[key];
-}
-
-/**
- * 检查浏览器是否支持某个css属性值
- * @param {String} key - 检查的属性值所属的css属性名
- * @param {String} value - 要检查的css属性值（不要带前缀）
- * @returns {String} - 返回浏览器支持的属性值
- */
-function valiateCssValue(key, value) {
-  var prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
-  var prefixValue = [];
-  for (var i = 0; i < prefix.length; i++) {
-    prefixValue.push(prefix[i] + value);
-  }
-  var element = document.createElement("div");
-  var eleStyle = element.style;
-  for (var j = 0; j < prefixValue.length; j++) {
-    eleStyle[key] = prefixValue[j];
-  }
-  return eleStyle[key];
-}
-
-function validCss(key, value) {
-  const validCss = validateCssKey(key);
-  if (validCss) {
-    return validCss;
-  }
-  return valiateCssValue(key, value);
-}
-https://segmentfault.com/a/11... 它里面有 forEach。
-```
-## 196.返回当前网页地址
-```js
-#方案一：location
-function currentURL() {
-  return window.location.href;
-}
-currentURL()
-#方案二：a 标签
-function currentURL() {
-  var el = document.createElement('a')
-  el.href = ''
-  return el.href
-}
-currentURL()
-#获取滚动条位置
-function getScrollPosition(el = window) {
-  return {
-    x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
-    y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop,
-  };
-}
-```
-## 197.获取 url 中的参数
-```js
-#方案一：正则 + reduce
-function getURLParameters(url) {
-  return url
-    .match(/([^?=&]+)(=([^&]*))/g)
-    .reduce(
-      (a, v) => (
-        (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
-      ),
-      {}
-    );
-}
-getURLParameters(location.href)
-#方案二：split + reduce
-function getURLParameters(url) {
-  return url
-    .split('?') //取？分割
-    .slice(1) //不要第一部分
-    .join() //拼接
-    .split('&')//&分割
-    .map(v=>v.split('=')) //=分割
-    .reduce((s,n)=>{s[n[0]] = n[1];return s},{})
-}
-getURLParameters(location.href)
-// getURLParameters('')
-#方案三: URLSearchParams
-```
-## 198.页面跳转，是否记录在 history 中
-```js
-#方案一：
-function redirect(url, asLink = true) {
-  asLink ? (window.location.href = url) : window.location.replace(url);
-}
-#方案二：
-function redirect(url, asLink = true) {
-  asLink ? window.location.assign(url) : window.location.replace(url);
-}
-```
-## 199.滚动条回到顶部动画
-```js
-#方案一： c - c / 8
-c 没有定义
-
-function scrollToTop() {
-  const scrollTop =
-    document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, c - c / 8);
-  } else {
-    window.cancelAnimationFrame(scrollToTop);
-  }
-}
-scrollToTop()
-修正之后
-
-function scrollToTop() {
-  const scrollTop =
-    document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, scrollTop - scrollTop / 8);
-  } else {
-    window.cancelAnimationFrame(scrollToTop);
-  }
-}
-scrollToTop()
-```
-## 200.复制文本
+## 复制文本
 ```js
 #方案一：
 function copy(str) {
@@ -2241,109 +1819,9 @@ function copy(str) {
   }
 }
 ```
-## 201.检测设备类型
+## 判断当前位置是否为页面底部
 ```js
-#方案一： ua
-function detectDeviceType() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  )
-    ? "Mobile"
-    : "Desktop";
-}
-detectDeviceType()
-#方案二：事件属性
-function detectDeviceType() {
-  return ("ontouchstart" in window || navigator.msMaxTouchPoints)
-    ? "Mobile"
-    : "Desktop";
-}
-detectDeviceType()
-```
-## 202.Cookie
-```js
-#增
-function setCookie(key, value, expiredays) {
-  var exdate = new Date();
-  exdate.setDate(exdate.getDate() + expiredays);
-  document.cookie =
-    key +
-    "=" +
-    escape(value) +
-    (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
-}
-#删
-function delCookie(name) {
-  var exp = new Date();
-  exp.setTime(exp.getTime() - 1);
-  var cval = getCookie(name);
-  if (cval != null) {
-    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-  }
-}
-#查
-function getCookie(name) {
-  var arr,
-    reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-  if ((arr = document.cookie.match(reg))) {
-    return arr[2];
-  } else {
-    return null;
-  }
-}
-#清空
-有时候我们想清空，但是又无法获取到所有的cookie。 这个时候我们可以了利用写满，然后再清空的办法。
-```
-#日期 Date
-## 203.时间戳转换为时间
-```js
-默认为当前时间转换结果
-isMs 为时间戳是否为毫秒
-function timestampToTime(timestamp = Date.parse(new Date()), isMs = true) {
-  const date = new Date(timestamp * (isMs ? 1 : 1000));
-  return `${date.getFullYear()}-${
-    date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-}
-补位可以改成 padStart
-补位还可以改成 slice image.png
-如果做海外的话，还会有时区问题，一般我用moment解决。如果想看原生的
-
-#获取当前时间戳
-基于上一个想到的问题
-
-#方案一：Date.parse(new Date())
-#方案二：Date.now()
-#方案三：+new Date()
-#文档对象 DOM
-#固定滚动条
-/**
- * 功能描述：一些业务场景，如弹框出现时，需要禁止页面滚动，这是兼容安卓和 iOS 禁止页面滚动的解决方案
- */
-
-let scrollTop = 0;
-
-function preventScroll() {
-  // 存储当前滚动位置
-  scrollTop = window.scrollY;
-
-  // 将可滚动区域固定定位，可滚动区域高度为 0 后就不能滚动了
-  document.body.style["overflow-y"] = "hidden";
-  document.body.style.position = "fixed";
-  document.body.style.width = "100%";
-  document.body.style.top = -scrollTop + "px";
-  // document.body.style['overscroll-behavior'] = 'none'
-}
-
-function recoverScroll() {
-  document.body.style["overflow-y"] = "auto";
-  document.body.style.position = "static";
-  // document.querySelector('body').style['overscroll-behavior'] = 'none'
-
-  window.scrollTo(0, scrollTop);
-}
-#判断当前位置是否为页面底部
-返回值为 true/false
+//返回值为 true/false
 function bottomVisible() {
   return (
     document.documentElement.clientHeight + window.scrollY >=
@@ -2351,69 +1829,8 @@ function bottomVisible() {
       document.documentElement.clientHeight)
   );
 }
-#判断元素是否在可视范围内
-partiallyVisible 为是否为完全可见
-function elementIsVisibleInViewport(el, partiallyVisible = false) {
-  const { top, left, bottom, right } = el.getBoundingClientRect();
-
-  return partiallyVisible
-    ? ((top > 0 && top < innerHeight) ||
-        (bottom > 0 && bottom < innerHeight)) &&
-        ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
-    : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
-}
 ```
-## 204.获取元素 css 样式
-```js
-function getStyle(el, ruleName) {
-  return getComputedStyle(el, null).getPropertyValue(ruleName);
-}
-```
-## 205.进入全屏
-```js
-function launchFullscreen(element) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullScreen();
-  }
-}
-
-launchFullscreen(document.documentElement);
-launchFullscreen(document.getElementById("id")); //某个元素进入全屏
-```
-## 退出全屏
-```js
-function exitFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
-}
-
-exitFullscreen();
-```
-## 全屏事件
-```js
-document.addEventListener("fullscreenchange", function (e) {
-  if (document.fullscreenElement) {
-    console.log("进入全屏");
-  } else {
-    console.log("退出全屏");
-  }
-});
-```
-### 数字 Number
-## 206.数字千分位分割
+## 数字千分位分割
 ```js
 function commafy(num) {
   return num.toString().indexOf(".") !== -1
@@ -2422,7 +1839,7 @@ function commafy(num) {
 }
 commafy(1000)
 ```
-## 207.生成随机数
+## 生成随机数
 ```js
 function randomNum(min, max) {
   switch (arguments.length) {

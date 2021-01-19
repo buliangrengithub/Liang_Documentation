@@ -30,6 +30,19 @@ export function getUrlParam(name, origin = null) {
     return null;
 }
 ```
+## 197.获取 url 中的参数
+```js
+function getURLParameters(url) {
+  return url
+    .match(/([^?=&]+)(=([^&]*))/g)
+    .reduce(
+      (a, v) => (
+        (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
+      ),
+      {}
+    );
+}
+```
 ## 获取url参数（第二种）
 ```js
  /**
@@ -189,6 +202,50 @@ export function exitFullscreen() {
     }
 }
 ```
+## 进入全屏
+```js
+function launchFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+launchFullscreen(document.documentElement);
+launchFullscreen(document.getElementById("id")); //某个元素进入全屏
+```
+## 退出全屏
+```js
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+exitFullscreen();
+```
+## 全屏事件
+```js
+document.addEventListener("fullscreenchange", function (e) {
+  if (document.fullscreenElement) {
+    console.log("进入全屏");
+  } else {
+    console.log("退出全屏");
+  }
+});
+```
+
 ## 返回当前滚动条位置
 ```js
 export const getScrollPosition = (el = window) => ({
@@ -1521,410 +1578,11 @@ export const storage = {
   }
 }
 ```
-## 156.数组降维
-```js
-//数组降维
-reduceDimension(arr) {
-      var reduced = [];
-      for (var i = 0; i < arr.length; i++) {
-        reduced = reduced.concat(arr[i]);
-      }
-      return reduced;
-}
-```
-## 157.设置cookie,获取cookie,删除cookie
-```js
- var cookieUtil = {
-  getCookie: function (name) {
-    var arrCookie = document.cookie.split("; ");
-    for (var i = 0; i < arrCookie.length; i++) {
-      var cookieItem = arrCookie[i].split('=');
-      if (cookieItem[0] == name) {
-        return cookieItem[1];
-      }
-    }
-    return undefined;
-  },
-  setCookie: function (name, value, expires, path, domain, secure) {
-    var cookieText = encodeURIComponent(name) + "=" +
-      encodeURIComponent(value);
-    if (expires instanceof Date) {
-      cookieText += "; expires=" + expires.toGMTString();
-    }
-    if (path) {
-      cookieText += "; path=" + path;
-    }
-    if (domain) {
-      cookieText += "; domain=" + domain;
-    }
-    if (secure) {
-      cookieText += "; secure";
-    }
-    document.cookie = cookieText;
-  },
-  removeCookie: function (name, path, domain, secure) {
-    this.set(name, "", new Date(0), path, domain, secure);
-  }
-} 
-```
-## 158.判读是否为外链
-```js
-/**
 
- * @description 判读是否为外链
- * @param path
- * @returns {boolean}
-   */
-   export function isExternal(path) {
-     return /^(https?:|mailto:|tel:)/.test(path);
-   }
-```
-## 159.校验密码是否小于6位
-```js
-/**
-    * @description 校验密码是否小于6位
-    * @param str
-    * @returns {boolean}
-      */
-      export function isPassword(str) {
-        return str.length >= 6;
-      }
-```      
-## 160.判断是否为数字
-```js
-/**
 
-  * @description 判断是否为数字
-  * @param value
-* @returns {boolean}
-   */
-   export function isNumber(value) {
-     const reg = /^[0-9]*$/;
-     return reg.test(value);
-   }
-```
-## 161.判断是否是名称
-```js
- /**
 
-   * @description 判断是否是名称
-   * @param value
- * @returns {boolean}
-    */
-    export function isName(value) {
-      const reg = /^[\u4e00-\u9fa5a-zA-Z0-9]+$/;
-      return reg.test(value);
-    }
-```
-## 162.判断是否为IP
-```js
-/**
 
-  * @description 判断是否为IP
-  * @param ip
-* @returns {boolean}
-   */
-   export function isIP(ip) {
-     const reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-     return reg.test(ip);
-   }
-```
-## 163.判断是否是传统网站
-```js
-/**
 
-  * @description 判断是否是传统网站
-  * @param url
-* @returns {boolean}
-   */
-   export function isUrl(url) {
-     const reg = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
-     return reg.test(url);
-   }
-```
-## 164.判断是否是小写字母
-```js
-/**
-
-  * @description 判断是否是小写字母
-  * @param str
-* @returns {boolean}
-   */
-   export function isLowerCase(str) {
-     const reg = /^[a-z]+$/;
-     return reg.test(str);
-   }
-```
-## 165.判断是否是大写字母
-```js
-/**
-
-  * @description 判断是否是大写字母
-  * @param str
-* @returns {boolean}
-   */
-   export function isUpperCase(str) {
-     const reg = /^[A-Z]+$/;
-     return reg.test(str);
-   }
-```
-## 166.判断是否是大写字母开头
-```js
-/**
-
-  * @description 判断是否是大写字母开头
-  * @param str
-* @returns {boolean}
-   */
-   export function isAlphabets(str) {
-     const reg = /^[A-Za-z]+$/;
-     return reg.test(str);
-   }
-```
-## 167.判断是否是字符串
-```js
-/**
-
-  * @description 判断是否是字符串
-* @param str
- * @returns {boolean}
-   */
-   export function isString(str) {
-     return typeof str === "string" || str instanceof String;
-   }
-```
-## 168.判断是否是数组
-```js
-/**
-
-  * @description 判断是否是数组
-    * @param arg
-  * @returns {arg is any[]|boolean}
-    */
-  export function isArray(arg) {
-     if (typeof Array.isArray === "undefined") {
-   return Object.prototype.toString.call(arg) === "[object Array]";
-     }
-     return Array.isArray(arg);
-   }
-```
-## 169.判断是否是端口号
-```js
-/**
-
-  * @description 判断是否是端口号
-  * @param str
-* @returns {boolean}
-   */
-   export function isPort(str) {
-     const reg = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
-     return reg.test(str);
-   }
-```
-## 170.判断是否是手机号
-```js
-/**
-
-  * @description 判断是否是手机号
-  * @param str
-* @returns {boolean}
-   */
-   export function isPhone(str) {
-     const reg = /^1\d{10}$/;
-     return reg.test(str);
-   }
-```
-## 171.判断是否是身份证号(第二代)
-```js
-/**
-
-  * @description 判断是否是身份证号(第二代)
-  * @param str
-* @returns {boolean}
-   */
-   export function isIdCard(str) {
-     const reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-     return reg.test(str);
-   }
-```
-## 172.判断是否是邮箱
-```js
-/**
-
-  * @description 判断是否是邮箱
-  * @param str
-* @returns {boolean}
-   */
-   export function isEmail(str) {
-     const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-     return reg.test(str);
-   }
-```
-## 173.判断是否中文
-```js
-/**
-
-  * @description 判断是否中文
-  * @param str
-* @returns {boolean}
-   */
-   export function isChina(str) {
-     const reg = /^[\u4E00-\u9FA5]{2,4}$/;
-     return reg.test(str);
-   }
-```
-## 174.判断是否为空
-```js
-/**
-
-  * @description 判断是否为空
-    * @param str
-    * @returns {boolean}
-      */
-      export function isBlank(str) {
-        return (
-    str == null ||
-  false ||
-   str === "" ||
-   str.trim() === "" ||
-   str.toLocaleLowerCase().trim() === "null"
-     );
-   }
-```
-## 175.判断是否为固话
-```js
-/**
-
-  * @description 判断是否为固话
-  * @param str
-* @returns {boolean}
-   */
-   export function isTel(str) {
-     const reg = /^(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
-     return reg.test(str);
-   }
-```
-## 176.判断是否为数字且最多两位小数
-```js
-/**
-
-  * @description 判断是否为数字且最多两位小数
-  * @param str
-* @returns {boolean}
-   */
-   export function isNum(str) {
-     const reg = /^\d+(\.\d{1,2})?$/;
-     return reg.test(str);
-   }
-```
-## 177.判断经度 -180.0～+180.0（整数部分为0～180，必须输入1到5位小数）
-```js
-/**
-
-  * @description 判断经度 -180.0～+180.0（整数部分为0～180，必须输入1到5位小数）
-  * @param str
-* @returns {boolean}
-   */
-   export function isLongitude(str) {
-     const reg = /^[-|+]?(0?\d{1,2}\.\d{1,5}|1[0-7]?\d{1}\.\d{1,5}|180\.0{1,5})$/;
-     return reg.test(str);
-   }
-```
-## 178.判断纬度 -90.0～+90.0（整数部分为0～90，必须输入1到5位小数）
-```js
-/**
-
-  * @description 判断纬度 -90.0～+90.0（整数部分为0～90，必须输入1到5位小数）
-  * @param str
-* @returns {boolean}
-   */
-   export function isLatitude(str) {
-     const reg = /^[-|+]?([0-8]?\d{1}\.\d{1,5}|90\.0{1,5})$/;
-     return reg.test(str);
-   }
-```
-## 179.rtsp校验只要有rtsp://
-```js
-/**
-
-  * @description rtsp校验，只要有rtsp://
-  * @param str
-  * @returns {boolean}
-    */
-  export function isRTSP(str) {
-     const reg = /^rtsp:\/\/([a-z]{0,10}:.{0,10}@)?(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-     const reg1 = /^rtsp:\/\/([a-z]{0,10}:.{0,10}@)?(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]):[0-9]{1,5}/;
-     const reg2 = /^rtsp:\/\/([a-z]{0,10}:.{0,10}@)?(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\//;
-     return reg.test(str) || reg1.test(str) || reg2.test(str);
-   }
-```
-## 180.判断IE浏览器版本和检测是否为非IE浏览器
-```js
-function IEVersion() {
-	var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
-	var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
-	var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
-	var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
-	if (isIE) {
-		var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
-		reIE.test(userAgent);
-		var fIEVersion = parseFloat(RegExp["$1"]);
-		if (fIEVersion == 7) {
-			return 7;
-		} else if (fIEVersion == 8) {
-			return 8;
-		} else if (fIEVersion == 9) {
-			return 9;
-		} else if (fIEVersion == 10) {
-			return 10;
-		} else {
-			return 6; //IE版本<=7
-		}
-	} else if (isEdge) {
-		return 'edge'; //edge
-	} else if (isIE11) {
-		return 11; //IE11  
-	} else {
-		return -1; //不是ie浏览器
-	}
-}
-```
-## 181.数组去重
-### 方案一：Set + ...
-```js
-function noRepeat(arr) {
-  return [...new Set(arr)];
-}
-noRepeat([1,2,3,1,2,3])
-```
-### 方案二：Set + Array.from
-```js
-function noRepeat(arr) {
-  return Array.from(new Set(arr));
-}
-noRepeat([1,2,3,1,2,3])
-```
-### 方案三：双重遍历比对下标
-```js
-function noRepeat(arr) {
-  return arr.filter((v, idx)=>idx == arr.lastIndexOf(v))
-}
-noRepeat([1,2,3,1,2,3])
-```
-### 方案四：单遍历 + Object 特性
-```js
-Object 的特性是 Key 不会重复。 这里使用 values 是因为可以保留类型，keys 会变成字符串。
-
-function noRepeat(arr) {
-  return Object.values(arr.reduce((s,n)=>{
-    s[n] = n;
-    return s
-  },{}))
-}
-noRepeat([1,2,3,1,2,3])
-```
-### 后记
-针对于上述的方案，还有其他变种实现。
 
 ## 182.查找数组最大
 ### 方案一：Math.max + ...
@@ -1955,421 +1613,31 @@ function arrayMax(arr) {
 }
 arrayMax([-1,-4,5,2,0])
 ```
-### 方案五：排序
-```js
-function arrayMax(arr) {
-  return arr.sort((n,m)=>m-n)[0]
-}
-arrayMax([-1,-4,5,2,0])
-```
-## 184.返回已 size 为长度的数组分割的原数组
-```js
-#方案一：Array.from + slice
-function chunk(arr, size = 1) {
-  return Array.from(
-    {
-      length: Math.ceil(arr.length / size),
-    },
-    (v, i) => arr.slice(i * size, i * size + size)
-  );
-}
-chunk([1,2,3,4,5,6,7,8],3)
-#方案二：Array.from + splice
-function chunk(arr, size = 1) {
-  return Array.from(
-    {
-      length: Math.ceil(arr.length / size),
-    },
-    (v, i) => arr.splice(0, size)
-  );
-}
-chunk([1,2,3,4,5,6,7,8],3)
-#方案三：遍历 + splice
-function chunk(arr, size = 1) {
-    var _returnArr = [];
-    while(arr.length){
-        _returnArr.push(arr.splice(0, size))
-    }
-    return _returnArr
-}
-chunk([1,2,3,4,5,6,7,8],3)
-#检查数组中某元素出现的次数
-#方案一：reduce
-function countOccurrences(arr, value) {
-  return arr.reduce((a, v) => (v === value ? a + 1 : a + 0), 0);
-}
-countOccurrences([1,2,3,4,5,1,2,1,2,3], 1)
-#方案二：filter
-function countOccurrences(arr, value) {
-  return arr.filter(v=>v===value).length
-}
-countOccurrences([1,2,3,4,5,1,2,1,2,3], 1)
-```
-## 185.扁平化数组
-```js
-#方案一：递归 + ...
-function flatten(arr, depth = -1) {
-  if (depth === -1) {
-    return [].concat(
-      ...arr.map((v) => (Array.isArray(v) ? this.flatten(v) : v))
-    );
-  }
-  if (depth === 1) {
-    return arr.reduce((a, v) => a.concat(v), []);
-  }
-  return arr.reduce(
-    (a, v) => a.concat(Array.isArray(v) ? this.flatten(v, depth - 1) : v),
-    []
-  );
-}
-flatten([1,[2,[3]]])
-#方案二：es6 原生 flat
-function flatten(arr, depth = Infinity) {
-  return arr.flat(depth)
-}
-flatten([1,[2,[3]]])
-#对比两个数组并且返回其中不同的元素
-#方案一：filter + includes
-他原文有问题，以下方法的 4,5 没有返回
 
-function diffrence(arrA, arrB) {
-  return arrA.filter((v) => !arrB.includes(v));
-}
-diffrence([1,2,3], [3,4,5,2])
-需要再操作一遍
 
-function diffrence(arrA, arrB) {
-  return arrA.filter((v) => !arrB.includes(v))
-    .concat(arrB.filter((v) => !arrA.includes(v)));
-}
-diffrence([1,2,3], [3,4,5,2])
-#方案二：hash + 遍历
-算是方案1的变种吧，优化了 includes 的性能。
-```
-## 186.返回两个数组中相同的元素
-```js
-#方案一：filter + includes
-function intersection(arr1, arr2) {
-  return arr2.filter((v) => arr1.includes(v));
-}
-intersection([1,2,3], [3,4,5,2])
-#方案二：同理变种用 hash
-function intersection(arr1, arr2) {
-    var set = new Set(arr2)
-  return arr1.filter((v) => set.has(v));
-}
-intersection([1,2,3], [3,4,5,2])
-```
-## 187.从右删除 n 个元素
-```js
-#方案一：slice
-function dropRight(arr, n = 0) {
-  return n < arr.length ? arr.slice(0, arr.length - n) : [];
-}
-dropRight([1,2,3,4,5], 2)
-#方案二: splice
-function dropRight(arr, n = 0) {
-  return arr.splice(0, arr.length - n)
-}
-dropRight([1,2,3,4,5], 2)
-#方案三: slice 另一种
-function dropRight(arr, n = 0) {
-  return arr.slice(0, -n)
-}
-dropRight([1,2,3,4,5], 2)
-#方案四: 修改 length
-function dropRight(arr, n = 0) {
-    arr.length = Math.max(arr.length - n, 0)
-    return arr
-}
-dropRight([1,2,3,4,5], 2)
-```
-## 188.截取第一个符合条件的元素及其以后的元素
-```js
-#方案一：slice + 循环
-function dropElements(arr, fn) {
-  while (arr.length && !fn(arr[0])) arr = arr.slice(1);
-  return arr;
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v == 2)
-#方案二：findIndex + slice
-function dropElements(arr, fn) {
-  return arr.slice(Math.max(arr.findIndex(fn), 0));
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v === 3)
-#方案三：splice + 循环
-function dropElements(arr, fn) {
-  while (arr.length && !fn(arr[0])) arr.splice(0,1);
-  return arr;
-}
-dropElements([1,2,3,4,5,1,2,3], (v) => v == 2)
-```
-## 189.返回数组中下标间隔 nth 的元素
-```js
-#方案一：filter
-function everyNth(arr, nth) {
-  return arr.filter((v, i) => i % nth === nth - 1);
-}
-everyNth([1,2,3,4,5,6,7,8], 2)
-#方案二：方案一修改判断条件
-function everyNth(arr, nth) {
-  return arr.filter((v, i) => (i+1) % nth === 0);
-}
-everyNth([1,2,3,4,5,6,7,8], 2)
-## 190.返回数组中第 n 个元素（支持负数）
-#方案一：slice
-function nthElement(arr, n = 0) {
-  return (n >= 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
-}
-nthElement([1,2,3,4,5], 0)
-nthElement([1,2,3,4,5], -1)
-#方案二：三目运算符
-function nthElement(arr, n = 0) {
-  return (n >= 0 ? arr[0] : arr[arr.length + n])
-}
-nthElement([1,2,3,4,5], 0)
-nthElement([1,2,3,4,5], -1)
-```
-## 191.返回数组头元素
-```js
-#方案一：
-function head(arr) {
-  return arr[0];
-}
-head([1,2,3,4])
-#方案二：
-function head(arr) {
-  return arr.slice(0,1)[0];
-}
-head([1,2,3,4])
-```
-## 192.返回数组末尾元素
-```js
-#方案一：
-function last(arr) {
-  return arr[arr.length - 1];
-}
-#方案二：
-function last(arr) {
-  return arr.slice(-1)[0];
-}
-last([1,2,3,4,5])
-```
-## 193.数组乱排
-```js
-#方案一：洗牌算法
-function shuffle(arr) {
-  let array = arr;
-  let index = array.length;
 
-  while (index) {
-    index -= 1;
-    let randomInedx = Math.floor(Math.random() * index);
-    let middleware = array[index];
-    array[index] = array[randomInedx];
-    array[randomInedx] = middleware;
-  }
-
-  return array;
-}
-shuffle([1,2,3,4,5])
-#方案二：sort + random
-function shuffle(arr) {
-  return arr.sort((n,m)=>Math.random() - .5)
-}
-shuffle([1,2,3,4,5])
-```
-## 194.伪数组转换为数组
-```js
-#方案一：Array.from
-Array.from({length: 2})
-#方案二：prototype.slice
-Array.prototype.slice.call({length: 2,1:1})
-#方案三：prototype.splice
-Array.prototype.splice.call({length: 2,1:1},0)
-```
-# 浏览器对象 BOM
-## 195.判读浏览器是否支持 CSS 属性
-```js
-/**
- * 告知浏览器支持的指定css属性情况
- * @param {String} key - css属性，是属性的名字，不需要加前缀
- * @returns {String} - 支持的属性情况
- */
-function validateCssKey(key) {
-  const jsKey = toCamelCase(key); // 有些css属性是连字符号形成
-  if (jsKey in document.documentElement.style) {
-    return key;
-  }
-  let validKey = "";
-  // 属性名为前缀在js中的形式，属性值是前缀在css中的形式
-  // 经尝试，Webkit 也可是首字母小写 webkit
-  const prefixMap = {
-    Webkit: "-webkit-",
-    Moz: "-moz-",
-    ms: "-ms-",
-    O: "-o-",
-  };
-  for (const jsPrefix in prefixMap) {
-    const styleKey = toCamelCase(`${jsPrefix}-${jsKey}`);
-    if (styleKey in document.documentElement.style) {
-      validKey = prefixMap[jsPrefix] + key;
-      break;
-    }
-  }
-  return validKey;
-}
-
-/**
- * 把有连字符号的字符串转化为驼峰命名法的字符串
- */
+### 把有连字符号的字符串转化为驼峰命名法的字符串
+ ```js
 function toCamelCase(value) {
   return value.replace(/-(\w)/g, (matched, letter) => {
     return letter.toUpperCase();
   });
 }
-
-/**
- * 检查浏览器是否支持某个css属性值（es6版）
- * @param {String} key - 检查的属性值所属的css属性名
- * @param {String} value - 要检查的css属性值（不要带前缀）
- * @returns {String} - 返回浏览器支持的属性值
- */
-function valiateCssValue(key, value) {
-  const prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
-  const prefixValue = prefix.map((item) => {
-    return item + value;
-  });
-  const element = document.createElement("div");
-  const eleStyle = element.style;
-  // 应用每个前缀的情况，且最后也要应用上没有前缀的情况，看最后浏览器起效的何种情况
-  // 这就是最好在prefix里的最后一个元素是''
-  prefixValue.forEach((item) => {
-    eleStyle[key] = item;
-  });
-  return eleStyle[key];
-}
-
-/**
- * 检查浏览器是否支持某个css属性值
- * @param {String} key - 检查的属性值所属的css属性名
- * @param {String} value - 要检查的css属性值（不要带前缀）
- * @returns {String} - 返回浏览器支持的属性值
- */
-function valiateCssValue(key, value) {
-  var prefix = ["-o-", "-ms-", "-moz-", "-webkit-", ""];
-  var prefixValue = [];
-  for (var i = 0; i < prefix.length; i++) {
-    prefixValue.push(prefix[i] + value);
-  }
-  var element = document.createElement("div");
-  var eleStyle = element.style;
-  for (var j = 0; j < prefixValue.length; j++) {
-    eleStyle[key] = prefixValue[j];
-  }
-  return eleStyle[key];
-}
-
-function validCss(key, value) {
-  const validCss = validateCssKey(key);
-  if (validCss) {
-    return validCss;
-  }
-  return valiateCssValue(key, value);
-}
-https://segmentfault.com/a/11... 它里面有 forEach。
 ```
-## 196.返回当前网页地址
-```js
-#方案一：location
-function currentURL() {
-  return window.location.href;
-}
-currentURL()
-#方案二：a 标签
-function currentURL() {
-  var el = document.createElement('a')
-  el.href = ''
-  return el.href
-}
-currentURL()
-#获取滚动条位置
-function getScrollPosition(el = window) {
-  return {
-    x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
-    y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop,
-  };
-}
-```
-## 197.获取 url 中的参数
-```js
-#方案一：正则 + reduce
-function getURLParameters(url) {
-  return url
-    .match(/([^?=&]+)(=([^&]*))/g)
-    .reduce(
-      (a, v) => (
-        (a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a
-      ),
-      {}
-    );
-}
-getURLParameters(location.href)
-#方案二：split + reduce
-function getURLParameters(url) {
-  return url
-    .split('?') //取？分割
-    .slice(1) //不要第一部分
-    .join() //拼接
-    .split('&')//&分割
-    .map(v=>v.split('=')) //=分割
-    .reduce((s,n)=>{s[n[0]] = n[1];return s},{})
-}
-getURLParameters(location.href)
-// getURLParameters('')
-#方案三: URLSearchParams
-```
+
+
 ## 198.页面跳转，是否记录在 history 中
 ```js
-#方案一：
+//方案一：
 function redirect(url, asLink = true) {
   asLink ? (window.location.href = url) : window.location.replace(url);
 }
-#方案二：
+//方案二：
 function redirect(url, asLink = true) {
   asLink ? window.location.assign(url) : window.location.replace(url);
 }
 ```
-## 199.滚动条回到顶部动画
-```js
-#方案一： c - c / 8
-c 没有定义
 
-function scrollToTop() {
-  const scrollTop =
-    document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, c - c / 8);
-  } else {
-    window.cancelAnimationFrame(scrollToTop);
-  }
-}
-scrollToTop()
-修正之后
-
-function scrollToTop() {
-  const scrollTop =
-    document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, scrollTop - scrollTop / 8);
-  } else {
-    window.cancelAnimationFrame(scrollToTop);
-  }
-}
-scrollToTop()
-```
 ## 200.复制文本
 ```js
 方案一：
@@ -2394,103 +1662,4 @@ function copy(str) {
   }
 }
 ```
-## 201.检测设备类型
-```js
-#方案一： ua
-function detectDeviceType() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  )
-    ? "Mobile"
-    : "Desktop";
-}
-detectDeviceType()
-#方案二：事件属性
-function detectDeviceType() {
-  return ("ontouchstart" in window || navigator.msMaxTouchPoints)
-    ? "Mobile"
-    : "Desktop";
-}
-detectDeviceType()
-```
-## 202.Cookie
-```js
-增
-function setCookie(key, value, expiredays) {
-  var exdate = new Date();
-  exdate.setDate(exdate.getDate() + expiredays);
-  document.cookie =
-    key +
-    "=" +
-    escape(value) +
-    (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
-}
-删
-function delCookie(name) {
-  var exp = new Date();
-  exp.setTime(exp.getTime() - 1);
-  var cval = getCookie(name);
-  if (cval != null) {
-    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-  }
-}
-查
-function getCookie(name) {
-  var arr,
-    reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-  if ((arr = document.cookie.match(reg))) {
-    return arr[2];
-  } else {
-    return null;
-  }
-}
-```
-## 204.获取元素 css 样式
-```js
-function getStyle(el, ruleName) {
-  return getComputedStyle(el, null).getPropertyValue(ruleName);
-}
-```
-## 进入全屏
-```js
-function launchFullscreen(element) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullScreen();
-  }
-}
 
-launchFullscreen(document.documentElement);
-launchFullscreen(document.getElementById("id")); //某个元素进入全屏
-```
-## 退出全屏
-```js
-function exitFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
-}
-
-exitFullscreen();
-```
-## 全屏事件
-```js
-document.addEventListener("fullscreenchange", function (e) {
-  if (document.fullscreenElement) {
-    console.log("进入全屏");
-  } else {
-    console.log("退出全屏");
-  }
-});
-```

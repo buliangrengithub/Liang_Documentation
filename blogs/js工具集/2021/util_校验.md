@@ -34,12 +34,50 @@ export const isMPStrict = value => /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|
 */
 export const isMPRelaxed = value => /^(?:(?:\+|00)86)?1[3-9]\d{9}$/g.test(value);
 ```
+## 判断是否是手机号
+```js
+/**
+
+  * @description 判断是否是手机号
+  * @param str
+* @returns {boolean}
+   */
+   export function isPhone(str) {
+     const reg = /^1\d{10}$/;
+     return reg.test(str);
+   }
+```
+## 判断是否为固话
+```js
+/**
+
+  * @description 判断是否为固话
+  * @param str
+* @returns {boolean}
+   */
+   export function isTel(str) {
+     const reg = /^(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
+     return reg.test(str);
+   }
 ## 验证email(邮箱)
 ```js
 /**
 @param { string } value
 */
 export const isEmail = value => /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/g.test(value);
+```
+## 判断是否是邮箱
+```js
+/**
+
+  * @description 判断是否是邮箱
+  * @param str
+* @returns {boolean}
+   */
+   export function isEmail(str) {
+     const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+     return reg.test(str);
+   }
 ```
 ## 验证座机电话(国内),如: 0341-86091234
 ```js
@@ -69,12 +107,38 @@ export const isIDCardNew = value => /^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d
 */
 export const isIDCard = value => /(^\d{8}(0\d|10|11|12)([0-2]\d|30|31)\d{3}$)|(^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$)/g.test(value);
 ```
+## 判断是否是身份证号(第二代)
+```js
+/**
+
+  * @description 判断是否是身份证号(第二代)
+  * @param str
+* @returns {boolean}
+   */
+   export function isIdCard(str) {
+     const reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+     return reg.test(str);
+   }
+```
 ## 验证中文/汉字
 ```js
 /**
 @param { string } value
 */
 export const isChineseCharacter = value => /^(?:[\u3400-\u4DB5\u4E00-\u9FEA\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0])+$/g.test(value);
+```
+## 判断是否中文
+```js
+/**
+
+  * @description 判断是否中文
+  * @param str
+* @returns {boolean}
+   */
+   export function isChina(str) {
+     const reg = /^[\u4E00-\u9FA5]{2,4}$/;
+     return reg.test(str);
+   }
 ```
 ## 验证小数
 ```js
@@ -268,88 +332,11 @@ export const isLowercase = value => /^[a-z]+$/g.test(value);
      return reg.test(str);
    }
 ```
-## 判断是否是手机号
-```js
-/**
 
-  * @description 判断是否是手机号
-  * @param str
-* @returns {boolean}
-   */
-   export function isPhone(str) {
-     const reg = /^1\d{10}$/;
-     return reg.test(str);
-   }
-```
-## 判断是否是身份证号(第二代)
-```js
-/**
 
-  * @description 判断是否是身份证号(第二代)
-  * @param str
-* @returns {boolean}
-   */
-   export function isIdCard(str) {
-     const reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-     return reg.test(str);
-   }
-```
-## 判断是否是邮箱
-```js
-/**
 
-  * @description 判断是否是邮箱
-  * @param str
-* @returns {boolean}
-   */
-   export function isEmail(str) {
-     const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-     return reg.test(str);
-   }
-```
-## 判断是否中文
-```js
-/**
 
-  * @description 判断是否中文
-  * @param str
-* @returns {boolean}
-   */
-   export function isChina(str) {
-     const reg = /^[\u4E00-\u9FA5]{2,4}$/;
-     return reg.test(str);
-   }
-```
-## 判断是否为空
-```js
-/**
 
-  * @description 判断是否为空
-    * @param str
-    * @returns {boolean}
-      */
-      export function isBlank(str) {
-        return (
-    str == null ||
-  false ||
-   str === "" ||
-   str.trim() === "" ||
-   str.toLocaleLowerCase().trim() === "null"
-     );
-   }
-```
-## 判断是否为固话
-```js
-/**
-
-  * @description 判断是否为固话
-  * @param str
-* @returns {boolean}
-   */
-   export function isTel(str) {
-     const reg = /^(400|800)([0-9\\-]{7,10})|(([0-9]{4}|[0-9]{3})(-| )?)?([0-9]{7,8})((-| |转)*([0-9]{1,4}))?$/;
-     return reg.test(str);
-   }
 ```
 ## 判断是否为数字且最多两位小数
 ```js
@@ -420,4 +407,55 @@ function IEVersion() {
 		return -1; //不是ie浏览器
 	}
 }
+```
+## Windows根据详细版本号判断当前系统名称
+```js
+ /**
+     * @param { string } osVersion 
+       */
+       export function OutOsName(osVersion) {
+       if(!osVersion){
+           return
+       }
+       let str = osVersion.substr(0, 3);
+       if (str === "5.0") {
+           return "Win 2000"
+       } else if (str === "5.1") {
+           return "Win XP"
+       } else if (str === "5.2") {
+           return "Win XP64"
+       } else if (str === "6.0") {
+           return "Win Vista"
+       } else if (str === "6.1") {
+           return "Win 7"
+       } else if (str === "6.2") {
+           return "Win 8"
+       } else if (str === "6.3") {
+           return "Win 8.1"
+       } else if (str === "10.") {
+           return "Win 10"
+   } else {
+        return "Win"
+    }
+    }
+```
+## 判断手机是Andoird还是IOS
+```js
+/**
+    *  0: ios
+    *  1: android
+    *  2: 其它
+       */
+       export function getOSType() {
+       let u = navigator.userAgent, app = navigator.appVersion;
+       let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+       let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+       if (isIOS) {
+           return 0;
+   }
+    if (isAndroid) {
+        return 1;
+    }
+    return 2;
+    }
 ```

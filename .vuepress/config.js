@@ -70,6 +70,12 @@ module.exports = {
         "lambda",
         "option",
         "stream",
+      ],
+      "/docs/微信公众号开发/": [
+        "",
+        "测试号申请",
+        "接入微信给公众号平台",
+        "微信网页开发",
       ]
     },
     "type": "blog",
