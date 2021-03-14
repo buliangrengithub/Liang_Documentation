@@ -8,7 +8,16 @@ module.exports = {
             children: [
                 "行为参数化/",
             ]
+        },
+        {
+            title: 'lambda',
+            collapsable: true,
+            children: [
+                "lambda/lambda",
+                "lambda/function_interface",
+            ]
         }
+
     ],
     "/docs/微信公众号开发/": [
         "",
