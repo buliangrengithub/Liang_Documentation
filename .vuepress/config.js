@@ -42,10 +42,15 @@ module.exports = {
     "lastUpdated": "Last Updated",
     "author": "zl",
     "authorAvatar": "/avatar.png",
-    "record": "xxxx",
-    "startYear": "2019"
+    // 备案
+    "record": '陕ICP备2021001972号-1',
+    "recordLink": 'ICP 备案指向链接',
+    "cyberSecurityRecord": '公安部备案',
+    "cyberSecurityLink": '公安部备案指向链接',
+    // 项目开始时间，只填写年份
+    "startYear": '2020'
   },
   "markdown": {
     "lineNumbers": true
-  }
+  },
 }

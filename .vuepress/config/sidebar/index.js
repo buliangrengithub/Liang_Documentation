@@ -16,15 +16,15 @@ module.exports = {
         "接入微信给公众号平台",
         "微信网页开发",
     ],
-    "/docs/spring/": [
+    "/docs/网课系列/spring5/": [
         "",
         {
             title: 'IOC工厂',
             collapsable: true,
             children: [
                 "IOC工厂/前言",
+                "IOC工厂/工厂设计模式",
                 "IOC工厂/第一个spring应用",
-                "IOC工厂/核心api",
             ]
         },
     ],

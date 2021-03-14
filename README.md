@@ -1,7 +1,7 @@
 ---
 home: true
-heroText: 知识库
-tagline: 一个方便复盘和记录的工具
+heroText: 代码库
+tagline: 找寻镜子 | 修炼己身 | 不鸣则已 | 一鸣惊人
 # heroImage: /hero.png
 # heroImageStyle: {
 #   maxWidth: '600px',
