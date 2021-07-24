@@ -1,4 +1,4 @@
-# !/usr/bin/env sh npm run deploy
+# sh npm run deploy
 
 # 确保脚本抛出遇到的错误
 set -e

@@ -1,7 +1,7 @@
 ---
 home: true
-heroText: 代码库
-tagline: 找寻镜子 | 修炼己身 | 不鸣则已 | 一鸣惊人
+heroText: 林子大了
+tagline: 越能体现人性尊严的快乐，越是一种最高级的快乐，我们之所以读书，行路，就是为了我们能够享受高级快乐
 # heroImage: /hero.png
 # heroImageStyle: {
 #   maxWidth: '600px',
