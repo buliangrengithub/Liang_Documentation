@@ -6,7 +6,8 @@ module.exports = [
         "text": "系列文章", "icon": "reco-message",
         "items": [
             {"text": "java8", "link": "/docs/系列文章/java8/"},
-            {"text": "spring5", "link": "/docs/系列文章/spring5/"}
+            {"text": "spring5", "link": "/docs/系列文章/spring5/"},
+            {"text": "MySQL", "link": "/docs/系列文章/mysql/"}
         ]
     },
     {
